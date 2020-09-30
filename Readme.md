@@ -26,6 +26,7 @@ commit -am é adicionar a modificação commitando direto sem adicionar pelo que
 ai eu dou commit -am é adicionar a modificação commitando direto sem adicionar pelo que entendi
 
 """"""""""""""""""""""""""""""""""""
+
 $ git status
 On branch master
 Your branch is up to date with 'origin/master'.
@@ -36,7 +37,9 @@ Changes not staged for commit:
         modified:   Readme.md
 
 no changes added to commit (use "git add" and/or "git commit -a")
+
 """"""""""""""""""""""""""""""""""""
+
 #isso mesmo o -m é mensagem e o -a é paara mandar direto sem precisar add
 
 git commit -am "edit readme again com lixo"
