@@ -676,6 +676,8 @@ Date:   Wed Sep 30 14:44:44 2020 -0300
 
 ###como apagar tags e branchs remotos
 
+git push origin :1.0.0 #aqui apaga a tag/versao 1.0.0
+git push origin :test #aqui apaga o branch
 
 
 
