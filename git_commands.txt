@@ -1,0 +1,681 @@
+###Basic configuration
+
+##Após instalar o git ##Vai na pasta e da um git bash here
+		
+###setando configurações para o global (tipo geralzão)
+
+#para setar user name
+
+git config ##global user.name "Matheusbp"
+
+#para setar user.email
+
+git config ##global user.email "matheusbpamplona@outlook.com"
+
+#para setar o editor
+
+git config ##global core.editor notepad++ #aqui pode ser vim ou algo assim
+
+#para ver as configurações ja selecionadas
+
+git config user.name
+ou git config ##list #pra mostrar tudo
+
+### essencial do git
+
+##inicializando um repositório
+
+#criar uma pasta para o projeto X na pasta que estou (/f/Documents/Coding/curso_git)
+
+mkdir git_course_udemy
+
+#setar aquela pasta como parte do repositório depois de estar dentro da pasta
+#isso entra no repositório e ve as mudanças no projeto
+
+$ git init
+Initialized empty Git repository in F:/Documents/Coding/curso_git/git_course_udemy/.git/
+
+#se eu der ls -la ele mostra o que tem la dentro (um .git)
+
+ls -la 
+
+#quando entro no .git, tem umas pastas encarregadas de guardar as informações do repositório
+
+cd .git
+
+#config é configura~ção do repositorio
+#qual o branch padrão e qual o branch padrao 
+#objetos e referencias do rep
+
+##usando editror de texto (qualquer um desses comandos abre o notepad++ que é o que vou usar)
+
+####################################################
+start notepad++
+start notepad++ <filename>
+alias np='start notepad++'
+np <filename>
+
+
+####################################################
+##ciclo da vida de seus arquivos
+
+#git separa em 4 estados os arquivos e como eles vao ser:
+
+1. untracked - momento em que o arquivo acabou de ser adicionado ao repositorio mas ainda nao foi visto pelo git.
+
+2. unmodified - quando vc add no git ele existe no git mas nao teve nenhuma modificação
+
+3. modified - apos modificar (obvio)
+
+4. staged - área que vc começa a criar versões do seu arquivo. Aí quando vc faz o commit que é quando vc versiona, eles voltam a ser unmodified.
+
+#agora entrando no terminal
+
+#ver como esta o repositorio neste momento
+
+git status
+
+##como eu criei um arquivo Readme.md antes, aqui mostrou:
+
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        Readme.md
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+#agora vou adicionar o Readme.md pro git
+
+git add Readme.md
+
+#ver status again
+
+git status
+
+##output:
+
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   Readme.md
+
+
+##isso significa que ja estamos no estágio staged, preparado para commitar
+
+#commit é quando vc avisa o git para pegar todos os arquivos do meu repostório e cria uma versão
+
+#o -m é para commitar mandando mensagem assim os usuários sabem o que ta rolando
+
+$  git commit -m "Add Readme.md"
+[master (root-commit) 32f2091] Add Readme.md
+ 1 file changed, 3 insertions(+)
+ create mode 100644 Readme.md
+
+#master que é o branch atual, o local atual, criou o commit 32f2091 e inseriou o Readme.md COM 3 linhas que inseri.
+
+#se eu der um git status, terá nada para fazer pq nao tem nada modificado (staged) to commit
+
+#para eu dar commit de novo eu preciso primeiro adicionar o readme de novo
+
+$ git add Readme.md
+
+#e então
+
+git commit -m "Add Readme.md"
+[master 826b087] Add Readme.md
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+
+##visualizando logs
+
+#depois de dar o primeiro commit e ai temos que ver o histórico (log)
+
+git log
+
+$ git log
+commit 826b087387da1b1d895ce9cd2716a7817cc65923 (HEAD -> master)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 10:29:44 2020 -0300
+
+    Add Readme.md
+
+commit 32f209119f21764f31bdd34c909720c3a78d71b3
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 10:22:14 2020 -0300
+
+    Add Readme.md
+
+#p/ mostrar só o que tal autor fez
+
+git log --author="Matheusbp" 
+
+#shortlog
+
+git shortlog
+
+#shortlog e quantidade de commit por pessoa
+
+git shortlog -sm
+
+## visualizando o diff, que é a modificação feita nos arquivos, importante p ver se tem erros
+
+git diff
+
+#ver apenas os nomes dos arquivos modificados
+
+git diff --name-only
+
+#ai vc pega e add e commit
+
+## desfazendo as coisas
+
+#aqui eu modifiquei o readme, e vi que era ruim essa mudança, ai  checkout reseta ele do ultimo commit
+
+git checkout Readme.md
+
+##assim se eu der git diff, nao terá diferença
+
+#se eu quiser retornar um commit antes, a gente dá um git log:
+
+git log
+commit 97aaf5a6c1733fb0c03f1a4d3c3a3c4e37e4585b (HEAD -> master) #esse commit é ruim
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 11:06:09 2020 -0300
+
+    ahuehaueh
+
+commit 902b25e3d1615930d13ce2bc963b0d8e2fe93dd8  #esse é o que eu quero entrar resetando
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 10:52:58 2020 -0300
+
+    edit Readme
+
+commit 826b087387da1b1d895ce9cd2716a7817cc65923
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 10:29:44 2020 -0300
+
+    Add Readme.md
+
+commit 32f209119f21764f31bdd34c909720c3a78d71b3
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 10:22:14 2020 -0300
+
+    Add Readme.md
+
+
+#pega o código do commit e da um:
+
+git reset --soft 902b25e3d1615930d13ce2bc963b0d8e2fe93dd8
+
+##aí o aheuhauehaue bugado vai estar lá no arquivo mas nao terá sido comitado ainda, está em staged
+
+#se eu quero resetar sem estar em staged, isso é, antes de dar git add Readme.md:
+
+git reset --mixed 902b25e3d1615930d13ce2bc963b0d8e2fe93dd8
+
+## ele está modificado mas falta add para commitar
+
+#ai eu dou commit -am é adicionar a modificação commitando direto sem adicionar pelo que entendi
+
+""""""""""""""""""""""""""""""""""""
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   Readme.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+""""""""""""""""""""""""""""""""""""
+#isso mesmo o -m é mensagem e o -a é paara mandar direto sem precisar add
+
+git commit -am "edit readme again com lixo"
+
+#log
+
+$ git log
+commit 0fd369398491cfec0ebf444ed5abe51edc9e86ac (HEAD -> master)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 11:16:26 2020 -0300
+
+    edit readme again com lixo
+
+commit 902b25e3d1615930d13ce2bc963b0d8e2fe93dd8
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 10:52:58 2020 -0300
+
+    edit Readme
+
+commit 826b087387da1b1d895ce9cd2716a7817cc65923
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 10:29:44 2020 -0300
+
+    Add Readme.md
+
+commit 32f209119f21764f31bdd34c909720c3a78d71b3
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 10:22:14 2020 -0300
+
+    Add Readme.md
+
+
+#para resetar TUDO que tinha depois eu dou:
+
+$ git reset --hard 902b25e3d1615930d13ce2bc963b0d8e2fe93dd8
+HEAD is now at 902b25e edit Readme
+
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+##ou seja, voltou certin para como era no  902b25e3d1615930d13ce2bc963b0d8e2fe93dd8
+
+### Repositórios remotos
+
+## Criando repositório no github
+
+#vai no github e cria um repositório la em cima no +
+
+#SSH - chave para modificar os arquivos no github
+
+##gerar SSH
+
+#vai nesse link com passo a passo e vai gerar na pasta que diz lá
+https://docs.github.com/en/enterprise/2.14/user/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+#p ver ele vai em
+cd ~/.ssh/
+
+$ ls
+id_rsa  id_rsa.pub
+
+#p pegar a chave
+
+$ cat id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDF1IOnDSAIsdsttEPKyDHHVCsvAJosDQmQPT6WE3uYikY2AJkn0QonDM6nem3oGAxsCAJYxlYGlf7zMUOLeahMXyPh8Wvda98+PoDBYFFsimtotH+JR4tmyXej7NiS0o8F4GZGYppDVslvV0J7wYvICwcIUhn2QBpWVtaGh7M94vuZZrHvGsQO8tID3ZGJcGP20wfLa/HkE/4B16Rr05kqTjxMbhfxcvKysv/0x5Kmh2ISzIOi4SIEdzS9fbPvmGqFGijsGXxhd8ZIG8p0keJNJDYnmIyCgV83hsuA8YSS9akiBJ5Y6G56hXpIwytTxN8eL/82HIYbwz8/pAv7ITeon5dRDgDqP3vNGqRYr2TmVm7Tr+/keE1x4vaiz9xkEYefLSW0Jy34nIl0m3d+IG4phw8qYPqA3UnClHmzQsKMCg0o//vh5Y3WGSpbXB7AyljVJzJKTYjag/pPShiIwBZQcpE8BDpb+9L66wZQMKlejemXXnB56g2Nz0FYkD+0qxn4XEnLmsBMKczQlHnKjS7VVgE1reL8+7MrHJzm2+ICEUBMhVn2VMx6HxMI5zOirERIeNGDDsmJvKczBTyS4PCemSsctnAabXfcBRbfpLQGolpvF5zFl14DeIHyrKOP9UKkPRQl7vcgyjjTkYAeBr1pT2gIP5V7Vk/J4tzuAlX+eQ== matheusbpamplona@outlook.com
+
+#no github eu vou para entrar com essa chave, vou em settings e vou em ssh and cpg keys
+
+#Adiciono a chave e agora posso dar push de boa sem dar erro algum
+
+
+## Ligando repositório local a um remoto
+
+#la mesmo no github ele explica como fazer isso
+
+git remote add origin https://github.com/Matheusbp/github_course.git
+##esse origin é o nome da origem do remoto
+
+$ git remote
+origin
+
+#vai mostrar que tem o repositorio origin
+
+#para mostrar o link do repositorio
+$ git remote -v
+origin  https://github.com/Matheusbp/github_course.git (fetch)
+origin  https://github.com/Matheusbp/github_course.git (push)
+
+#envia os arquivos que tenho para o repositorio que estou trabalhando. O -u é para nao precisar ficar colocando sempre o origin master, master é da onde vem, no caso eu estou no branch master ( tá no final entre parentesis: Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/git_course_udemy (master)) e vai para origin que é o repositório
+
+$ git push -u origin master
+Enumerating objects: 9, done.
+Counting objects: 100% (9/9), done.
+Delta compression using up to 2 threads
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (9/9), 808 bytes | 202.00 KiB/s, done.
+Total 9 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), done.
+To https://github.com/Matheusbp/github_course.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+
+##Enviando mudanças para um repositório remoto
+
+#fazer o que fiz acima mesmo
+
+##clonando repositorios remotos na maquina local
+#mudo de pasta, pego o link no github (ta ali em code e ai pega o https)
+
+$ git clone https://github.com/Matheusbp/github_course.git
+Cloning into 'github_course'...
+remote: Enumerating objects: 18, done.
+remote: Counting objects: 100% (18/18), done.
+remote: Compressing objects: 100% (8/8), done.
+remote: Total 18 (delta 4), reused 17 (delta 3), pack-reused 0
+Unpacking objects: 100% (18/18), 2.14 KiB | 4.00 KiB/s, done.
+
+##fork
+
+#pega um trabalho de outra pessoa e aí vc dá o fork para trabalhar a partir de outra pessoa's work
+#copia pra ti e faz as mudanças
+
+#clica em fork e ai vai pra sua conta, daí sim vc pode clonar e modificar!
+
+####Ramificação
+
+###branch
+
+##branch é um ponteiro movel que leva a um commit 
+
+#quando começa um reposittorio é o branch master o default. Aí o branch master faz os commits, porém posso criar um novo branch que faz outras modificações
+
+##pq usar branch?
+
+#vantagens
+	-modifica os arquivos sem alterar o local principal (master)
+	-facilmente desligável
+	-melhor pq nao precisa copiar todos os arquivos (clonando)
+	-multiplas pessoas trabalhando
+	-evita conflitos
+
+##criando um branch (-b diz que criou e o nome é testing)
+
+$ git checkout -b testing
+Switched to a new branch 'testing'
+
+#para ver quais sao os branchs que existem e o * mostra qual o que vc ta no momento
+
+$ git branch
+  master
+* testing
+
+##navegando entre os branchs
+
+$ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+
+#deletar branch
+
+$ git branch -D testing
+Deleted branch testing (was f01d718).
+
+##entendendo o merge
+
+#merge junta as coisas e deixa linear
+
+-pros
+	-nao destrutivo (cria um commit pra juntar tudo)
+-contra
+	-tem que fazer um novo commit
+	-deixa o historico poluído
+
+##rebase
+
+#ele faz tudo ficar na mesma linha de trabalho (fast forward_, se vc faz um experimeto que deu boa da pra fazer isso que é uma boa.
+
+-pro
+	-evita commit extras
+	-historico linear
+-contra
+	-perco aq ordem cronológica
+	
+##merge e rebase na prática
+
+#cria um foo.txt com o master e depois cria um brach chaamdo test e adiciona bar.txt, depois de voltar para o master a gente ve que o bar.txt nao esta ali pq quem modificou foi o branch test
+########################################################################
+
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        foo
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (master)
+$ git add foo
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (master)
+$ git commit -m "add foo"
+[master (root-commit) 9c24c05] add foo
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 foo
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (master)
+$ git checkout -b test
+Switched to a new branch 'test'
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (test)
+$ np bar
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (test)
+$ git add bar
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (test)
+$ git commit -m "add bar"
+[test eaa2b4b] add bar
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 bar
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (test)
+$ git log
+commit eaa2b4b199c03c8e62a46745b4cb9e41c3ce8f5b (HEAD -> test)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:41:36 2020 -0300
+
+    add bar
+
+commit 9c24c05fae045f9d1cc6ad181b4fa4382a88a553 (master)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:40:55 2020 -0300
+
+    add foo
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (test)
+$ git checkout master
+Switched to branch 'master'
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (master)
+$ git log
+commit 9c24c05fae045f9d1cc6ad181b4fa4382a88a553 (HEAD -> master)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:40:55 2020 -0300
+
+    add foo
+
+########################################################################
+
+#ai adiciona um arquivo chamado fizz usando o brach master
+
+########################################################################
+np fizz
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (master)
+$ git add fizz
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (master)
+$ git commit -m "add fizz"
+[master 38821f8] add fizz
+ 1 file changed, 1 insertion(+)
+ create mode 100644 fizz
+
+Usuário@DESKTOP-TTDJ57D MINGW64 /f/Documents/Coding/curso_git/rebase_merge (master)
+$ git log
+commit 38821f8926add1e364be2500b8e7e55219d16be8 (HEAD -> master)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:44:44 2020 -0300
+
+    add fizz
+
+commit 9c24c05fae045f9d1cc6ad181b4fa4382a88a553
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:40:55 2020 -0300
+
+    add foo
+
+########################################################################
+
+#usar merge ele adiciona o bar para o branch master
+
+#ele usou forma recursiva
+
+$ git merge test
+Merge made by the 'recursive' strategy.
+ bar | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 bar
+
+
+##rebase agora
+
+#criar arquivo buzz
+
+#cria novo branch $ git checkout -b rebase-branch
+Switched to a new branch 'rebase-branch'
+
+#cria arquivo bla
+
+#muda para o master branch
+
+$ git checkout master
+Switched to branch 'master'
+
+#ve o git log
+
+########################################################################
+$ git log
+commit 603bb41ec3b5b7e83c81e92232883931ae0375f9 (HEAD -> master)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:49:31 2020 -0300
+
+    add buzz
+
+commit 736ef9dad83d8098036de8b4f88416afdf27c8c7
+Merge: 38821f8 eaa2b4b
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:45:57 2020 -0300
+
+    Merge branch 'test' into master
+
+commit 38821f8926add1e364be2500b8e7e55219d16be8
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:44:44 2020 -0300
+
+    add fizz
+
+commit eaa2b4b199c03c8e62a46745b4cb9e41c3ce8f5b (test)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:41:36 2020 -0300
+
+    add bar
+
+commit 9c24c05fae045f9d1cc6ad181b4fa4382a88a553
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:40:55 2020 -0300
+
+########################################################################
+
+#cria arquivo seila e comita
+
+#se ver o git log nao veremos o bla pq foi mandado pelo test
+
+######################################################################## 
+
+$ git log
+commit d75efab0bce5495c644bb577f3bed691263e957f (HEAD -> master)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:54:07 2020 -0300
+
+    add seila
+
+commit 603bb41ec3b5b7e83c81e92232883931ae0375f9
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:49:31 2020 -0300
+
+    add buzz
+
+commit 736ef9dad83d8098036de8b4f88416afdf27c8c7
+Merge: 38821f8 eaa2b4b
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:45:57 2020 -0300
+
+    Merge branch 'test' into master
+
+commit 38821f8926add1e364be2500b8e7e55219d16be8
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:44:44 2020 -0300
+
+    add fizz
+
+commit eaa2b4b199c03c8e62a46745b4cb9e41c3ce8f5b (test)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:41:36 2020 -0300
+
+########################################################################
+
+#com o rebase teremos essa junção
+
+########################################################################
+$ git rebase rebase-branch
+Successfully rebased and updated refs/heads/master.
+
+
+$ git log
+commit 342ab0ce652ea5d79d141d5af389633b1a3bba95 (HEAD -> master)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:54:07 2020 -0300
+
+    add seila
+
+commit e55c49eff8e30860917f7cbbc7f2899ea643ca8a (rebase-branch)
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:51:45 2020 -0300
+
+    add bla
+
+commit 603bb41ec3b5b7e83c81e92232883931ae0375f9
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:49:31 2020 -0300
+
+    add buzz
+
+commit 736ef9dad83d8098036de8b4f88416afdf27c8c7
+Merge: 38821f8 eaa2b4b
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:45:57 2020 -0300
+
+    Merge branch 'test' into master
+
+commit 38821f8926add1e364be2500b8e7e55219d16be8
+Author: Matheusbp <matheusbpamplona@outlook.com>
+Date:   Wed Sep 30 14:44:44 2020 -0300
+
+########################################################################
+
+#com o git log --graph a gente ve que ficou linear sem tetr um novo ciclo adicionado
+
+# o que mostra que o rebase é melhor, mais organizado mas nao mostra quem fez a mudança, juntando commit
+
+
+###gitignore
+
+#ele é um arquivo que intica para o git o que tem que subir para o repositorio mas nao pode ser publico
+
+###colocando tags
+
+#estando em master branch é só rodar (o -m é pra adicionar uma mensagem)
+
+ git tag -a 1.0.0 -m "Readme modificado"
+
+#aí salva tudo que tava ali com o source code dessa versão. MUITO MASSA!!!
+
+###como apagar tags e branchs remotos
+
+
+
+
